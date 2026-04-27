@@ -1,15 +1,15 @@
 # MarkItDown Converter
 
-Microsoft **MarkItDown** 的桌面图形化前端。支持拖拽/选择文件，一键将 PDF、Word、Excel、PowerPoint、图片、音视频等格式转换为 Markdown。
+[简体中文](./README_zh.md)
 
-## 快速使用
+A desktop GUI frontend for Microsoft's **MarkItDown**. Effortlessly convert files like PDF, Word, Excel, PowerPoint, images, audio/video, and more into high-quality Markdown using a simple drag-and-drop interface.
 
-### 预编译版（推荐）
+### Quick Start
 
-从 [Releases](../../releases) 下载 `MarkItDown Converter 1.0.0.exe`，双击运行，无需任何环境配置。
+#### Pre-compiled Version (Recommended)
+Download `MarkItDown Converter 1.0.0.exe` from [Releases](../../releases). No environment configuration required.
 
-### 开发模式
-
+#### Development Mode
 ```bash
 # Windows
 setup.bat
@@ -17,43 +17,39 @@ setup.bat
 # macOS / Linux
 chmod +x setup.sh && ./setup.sh
 
-# 启动
+# Run
 npm start
 ```
 
-## 功能
+### Features
+- **File Input**: Drag-and-drop or click to select. Supports PDF, DOCX, XLSX, PPTX, Images, Audio, HTML, CSV, JSON, ZIP, etc.
+- **LLM Enhancement**: Optional OpenAI API integration (API Key, Base URL, Model Name) for smarter conversions (e.g., OCR, image description).
+- **Live Preview**: Real-time log output and Markdown syntax-highlighted preview.
+- **Export**: Save as `.md` files or copy directly to the clipboard.
 
-- **文件输入**：拖拽上传或点击选择，支持 PDF / DOCX / XLSX / PPTX / 图片 / 音频 / HTML / CSV / JSON / ZIP 等
-- **LLM 增强**：可选 OpenAI API Key + Base URL + 模型名（默认折叠，展开后可自定义）
-- **转换预览**：实时日志输出 + Markdown 语法高亮预览
-- **导出**：保存为 `.md` 文件或复制到剪贴板
+![Preview](image.png)
 
-## 打包
-
+### Build
 ```bash
-# 单文件便携版（开箱即用）
+# Portable Single-file Version (Ready to use)
 npm run build:win
 
-# @electron/packager 打包（免安装目录）
+# Packaged Directory (using @electron/packager)
 npm run pack
 ```
 
-## 项目结构
-
+### Project Structure
+```text
+├── main.js           # Electron Main Process
+├── preload.js        # IPC Bridge
+├── index.html        # Frontend UI (Vanilla CSS / Tailwind)
+├── renderer.js       # Frontend Logic
+├── converter.py      # Python conversion wrapper
+├── build-app.js      # Packager build script
+├── setup.bat         # Windows setup script
+├── setup.sh          # macOS / Linux setup script
 ```
-├── main.js           # Electron 主进程
-├── preload.js        # IPC 桥接
-├── index.html        # 前端 UI（Tailwind CSS）
-├── renderer.js       # 前端交互逻辑
-├── converter.py      # Python 转换封装
-├── build-app.js      # packager 打包脚本
-├── setup.bat         # Windows 初始化脚本
-└── setup.sh          # macOS / Linux 初始化脚本
-```
 
-## 技术栈
-
-- **前端**：Electron 33 + Tailwind CSS (CDN)
-- **转换引擎**：Python 3.11 / markitdown[all] + PyInstaller 编译为独立 exe
-- **通信**：IPC (contextBridge) + JSON lines stdout
-- **可选 LLM**：OpenAI Python SDK（GPT-4o 等）
+### Tech Stack
+- **Frontend**: Electron 33 + Tailwind CSS
+- **Conversion Engine**: Python 3.11 + [markitdown](https://github.com/microsoft/markitdown)
