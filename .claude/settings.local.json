@@ -1,0 +1,34 @@
+{
+  "permissions": {
+    "allow": [
+      "Bash(npm --version)",
+      "Bash(cmd /c \"setup.bat\")",
+      "Bash(python -m venv .venv)",
+      "Bash(npm install *)",
+      "Bash(ls .venv/Scripts/python.exe)",
+      "Bash(ls node_modules/electron/package.json)",
+      "Bash(du -sh .venv/ node_modules/)",
+      "Bash(echo \"# Test\")",
+      "Bash(dist/converter.exe --file-path _test_tmp.md)",
+      "Bash(rm _test_tmp.md)",
+      "Bash(echo \"# Hello\")",
+      "Bash(dist/converter.exe --file-path _t.md)",
+      "Bash(rm _t.md)",
+      "Bash(dist/converter.exe --file-path \"D:\\\\Temp_not_synced\\\\MarkitDown\\\\dist\\\\converter.exe\")",
+      "Bash(dist/converter.exe --file-path \"C:\\\\Windows\\\\System32\\\\licenses\\\\LIC-Windows\\\\LIC-Windows.rtf\")",
+      "Bash(npx electron-builder *)",
+      "Bash(rm -rf \"/c/Users/Iroha/AppData/Local/electron-builder/Cache/winCodeSign\")",
+      "Bash(mkdir -p \"/c/Users/Iroha/AppData/Local/electron-builder/Cache/winCodeSign\")",
+      "Bash(cd /tmp)",
+      "Bash(curl -L -o wincodesign.7z \"https://github.com/electron-userland/electron-builder-binaries/releases/download/winCodeSign-2.6.0/winCodeSign-2.6.0.7z\")",
+      "Bash(node -e \"const p = require\\('@electron/packager'\\); console.log\\(typeof p, typeof p.default\\)\")",
+      "Bash(node -e \"const p = require\\('@electron/packager'\\); console.log\\(Object.keys\\(p\\)\\)\")",
+      "Bash(node -e ' *)",
+      "Bash(node build-app.js)",
+      "Bash(npx asar *)",
+      "Bash(npm run *)",
+      "Bash(git commit -m ' *)",
+      "Bash(npx --yes gh create repo markitdown-gui --public --push --source=.)"
+    ]
+  }
+}
