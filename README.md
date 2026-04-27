@@ -7,7 +7,8 @@ This project is a desktop GUI frontend based on Microsoft's [MarkItDown](https:/
 ### Quick Start
 
 #### Pre-compiled Version (Recommended)
-Download `MarkItDown Converter 1.0.0.exe` from [Releases](../../releases). No environment configuration required.
+Download `MarkItDown Converter 1.0.0.exe` from [Releases](../../releases) and double-click to run it. Ready to use, no environment configuration is required.
+**Note: It is normal for the application to be unresponsive briefly during the conversion process. Do not close the program.**
 
 #### Development Mode
 ```bash

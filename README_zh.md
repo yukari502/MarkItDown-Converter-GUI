@@ -7,7 +7,8 @@
 ### 快速使用
 
 #### 预编译版（推荐）
-从 [Releases](../../releases) 下载 `MarkItDown Converter 1.0.0.exe`，双击运行，无需任何环境配置。
+从 [Releases](../../releases) 下载 `MarkItDown Converter 1.0.0.exe`，双击运行，开箱即用，无需任何环境配置。
+**注：转换处理过程中短暂无响应是正常现象，不要关闭程序。**
 
 #### 开发模式
 ```bash
