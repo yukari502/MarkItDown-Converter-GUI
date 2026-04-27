@@ -79,8 +79,28 @@ function appendLog(message, className = "") {
   div.className = className;
   div.textContent = message;
   logPanel.appendChild(div);
-  logPanel.scrollTop = logPanel.scrollHeight;
 }
+
+/* Batched version — defers actual DOM writes to next animation frame
+   so rapid IPC events don't freeze the renderer.                  */
+let _logBatch = [];
+let _logRaf = null;
+function appendLogThrottled(message, className = "") {
+  _logBatch.push({ message, className });
+  if (!_logRaf) {
+    _logRaf = requestAnimationFrame(() => {
+      for (const { message: m, className: c } of _logBatch) {
+        appendLog(m, c);
+      }
+      logPanel.scrollTop = logPanel.scrollHeight;
+      _logBatch = [];
+      _logRaf = null;
+    });
+  }
+}
+
+/* Appends a message immediately (used for user-initiated actions). */
+const appendLogNow = appendLog;
 
 function setPreview(markdown) {
   latestMarkdown = markdown;
@@ -195,27 +215,27 @@ btnConvert.addEventListener("click", () => {
 // ── IPC listeners ─────────────────────────────────────────────────────────────
 
 window.electronAPI.onConversionStart(({ filePath }) => {
-  appendLog(`[${filePath}] Preparing…`, "log-info");
+  appendLogThrottled(`[${filePath}] Preparing…`, "log-info");
 });
 
 window.electronAPI.onConversionLog(({ message }) => {
-  // simple level detection from message prefix
   let cls = "log-info";
   if (/^Done/i.test(message)) cls = "log-done";
   else if (/warn/i.test(message)) cls = "log-warn";
   else if (/error|fail/i.test(message)) cls = "log-error";
   else if (/stderr/i.test(message)) cls = "log-warn";
-  appendLog(message, cls);
+  appendLogThrottled(message, cls);
 });
 
 window.electronAPI.onConversionError(({ error }) => {
-  appendLog(`ERROR: ${error}`, "log-error");
+  appendLogThrottled(`ERROR: ${error}`, "log-error");
   setConverting(false);
 });
 
 window.electronAPI.onConversionComplete(({ markdown }) => {
-  appendLog("Conversion complete.", "log-done");
-  setPreview(markdown);
+  appendLogThrottled("Conversion complete.", "log-done");
+  // Defer preview rendering so the UI stays responsive for large output
+  requestAnimationFrame(() => setPreview(markdown));
   setConverting(false);
   statusBadge.textContent = "✓ Done";
   statusBadge.classList.remove("hidden");

@@ -55,6 +55,10 @@ const ALL_FORMATS_FILTER = {
 /** @type {BrowserWindow | null} */
 let mainWindow = null;
 
+/** Track active child process for cleanup on quit. */
+/** @type {import("child_process").ChildProcess | null} */
+let activeProcess = null;
+
 function createWindow() {
   mainWindow = new BrowserWindow({
     width: 1200,
@@ -79,6 +83,14 @@ app.on("window-all-closed", () => {
 
 app.on("activate", () => {
   if (BrowserWindow.getAllWindows().length === 0) createWindow();
+});
+
+/** Kill any running converter process before the app quits. */
+app.on("before-quit", () => {
+  if (activeProcess) {
+    activeProcess.kill();
+    activeProcess = null;
+  }
 });
 
 // ── IPC handlers ──────────────────────────────────────────────────────────────
@@ -136,46 +148,60 @@ ipcMain.on("start-conversion", (_event, config) => {
     filePath: fileName,
   });
 
+  /* Give the renderer a chance to paint before we spawn a heavy process */
+  setImmediate(() => {
+    mainWindow.webContents.send("conversion-log", {
+      message: "Loading conversion engine…",
+    });
+  });
+
+  // Kill any previously running process before starting a new one
+  if (activeProcess) activeProcess.kill();
+
   const proc = spawn(cmd, args, { windowsHide: true });
+  activeProcess = proc;
 
   let resultSent = false;
   let stdoutBuf = "";
 
-  /* Parse each line of stdout as a JSON message from converter.py */
+  /* Parse each line of stdout — yield after every chunk so the event
+     loop stays responsive. */
   proc.stdout.on("data", (data) => {
     stdoutBuf += data.toString();
     const lines = stdoutBuf.split("\n");
-    stdoutBuf = lines.pop() || ""; // keep partial line in buffer
+    stdoutBuf = lines.pop() || "";
 
-    for (const raw of lines) {
-      const line = raw.trim();
-      if (!line) continue;
+    setImmediate(() => {
+      for (const raw of lines) {
+        const line = raw.trim();
+        if (!line) continue;
 
-      try {
-        const msg = JSON.parse(line);
+        try {
+          const msg = JSON.parse(line);
 
-        if (msg.type === "log") {
-          mainWindow.webContents.send("conversion-log", {
-            message: msg.message,
-          });
-        } else if (msg.type === "result") {
-          resultSent = true;
-          if (msg.success) {
-            mainWindow.webContents.send("conversion-complete", {
-              markdown: msg.markdown,
+          if (msg.type === "log") {
+            mainWindow.webContents.send("conversion-log", {
+              message: msg.message,
             });
-          } else {
-            mainWindow.webContents.send("conversion-error", {
-              error: msg.error,
-            });
+          } else if (msg.type === "result") {
+            resultSent = true;
+            if (msg.success) {
+              mainWindow.webContents.send("conversion-complete", {
+                markdown: msg.markdown,
+              });
+            } else {
+              mainWindow.webContents.send("conversion-error", {
+                error: msg.error,
+              });
+            }
           }
-        }
       } catch {
         // not JSON — still useful as a log line
         mainWindow.webContents.send("conversion-log", { message: line });
       }
     }
   });
+});
 
   /* stderr is treated as diagnostic info */
   proc.stderr.on("data", (data) => {
@@ -196,6 +222,7 @@ ipcMain.on("start-conversion", (_event, config) => {
   });
 
   proc.on("close", (code) => {
+    if (activeProcess === proc) activeProcess = null;
     if (!resultSent) {
       mainWindow.webContents.send("conversion-error", {
         error: `Python process exited with code ${code}`,

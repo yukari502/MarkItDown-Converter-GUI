@@ -13,6 +13,7 @@
   "build": {
     "appId": "com.markitdown.converter",
     "productName": "MarkItDown Converter",
+    "icon": "Icon.png",
     "directories": {
       "output": "release"
     },
@@ -36,6 +37,7 @@
   "devDependencies": {
     "@electron/packager": "^20.0.0",
     "electron": "^33.0.0",
-    "electron-builder": "^25.0.0"
+    "electron-builder": "^25.0.0",
+    "sharp": "^0.34.5"
   }
 }
