@@ -2,7 +2,7 @@
 
 [简体中文](./README_zh.md)
 
-A desktop GUI frontend for Microsoft's **MarkItDown**. Effortlessly convert files like PDF, Word, Excel, PowerPoint, images, audio/video, and more into high-quality Markdown using a simple drag-and-drop interface.
+This project is a desktop GUI frontend based on Microsoft's [MarkItDown](https://github.com/microsoft/markitdown). Effortlessly convert files like PDF, Word, Excel, PowerPoint, images, audio/video, and more into high-quality Markdown using a simple drag-and-drop interface.
 
 ### Quick Start
 

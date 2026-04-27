@@ -2,7 +2,7 @@
 
 [English](./README.md)
 
-Microsoft **MarkItDown** 的桌面图形化前端。支持拖拽/选择文件，一键将 PDF、Word、Excel、PowerPoint、图片、音视频等格式转换为 Markdown。
+本项目是基于微软 [MarkItDown](https://github.com/microsoft/markitdown) 开发的桌面图形化前端工具。支持拖拽/选择文件，一键将 PDF、Word、Excel、PowerPoint、图片、音视频等格式转换为 Markdown。
 
 ### 快速使用
 
