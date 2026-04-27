@@ -1,0 +1,30 @@
+# ── Python ───────────────────────────────────────
+.venv/
+__pycache__/
+*.pyc
+*.pyo
+*.egg-info/
+
+# ── Node ─────────────────────────────────────────
+node_modules/
+
+# ── Build artifacts ──────────────────────────────
+bin/
+release/
+out/
+dist/
+
+# ── OS ───────────────────────────────────────────
+.DS_Store
+Thumbs.db
+Desktop.ini
+
+# ── Editor / IDE ─────────────────────────────────
+.vscode/
+.idea/
+*.swp
+*.swo
+
+# ── Env (user keys, etc.) ───────────────────────
+.env
+.env.local

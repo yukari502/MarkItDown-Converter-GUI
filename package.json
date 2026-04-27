@@ -1,0 +1,40 @@
+{
+  "name": "markitdown-converter",
+  "version": "1.0.0",
+  "description": "Electron GUI frontend for Microsoft MarkItDown",
+  "author": "MarkItDown Converter",
+  "main": "main.js",
+  "scripts": {
+    "start": "electron .",
+    "build:win": "electron-builder --win",
+    "pack": "node build-app.js"
+  },
+  "build": {
+    "appId": "com.markitdown.converter",
+    "productName": "MarkItDown Converter",
+    "directories": {
+      "output": "release"
+    },
+    "files": [
+      "main.js",
+      "preload.js",
+      "index.html",
+      "renderer.js",
+      "converter.py"
+    ],
+    "extraResources": [
+      {
+        "from": "bin/converter.exe",
+        "to": "converter.exe"
+      }
+    ],
+    "win": {
+      "target": "portable"
+    }
+  },
+  "devDependencies": {
+    "@electron/packager": "^20.0.0",
+    "electron": "^33.0.0",
+    "electron-builder": "^25.0.0"
+  }
+}
