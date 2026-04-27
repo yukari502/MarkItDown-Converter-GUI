@@ -28,3 +28,4 @@ Desktop.ini
 # ── Env (user keys, etc.) ───────────────────────
 .env
 .env.local
+.claude/
