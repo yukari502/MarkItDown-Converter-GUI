@@ -8,7 +8,6 @@
 
 #### 预编译版（推荐）
 从 [Releases](../../releases) 下载 `MarkItDown Converter 1.0.0.exe`，双击运行，开箱即用，无需任何环境配置。
-注：依照markitdown，图片识别功能需要使用支持视觉识别的LLM。默认未配置，可自行配置 OpenAI API Key + Base URL + 模型名（默认折叠，展开后可自定义）。
 
 #### 开发模式
 ```bash

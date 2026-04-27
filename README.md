@@ -8,7 +8,7 @@ This project is a desktop GUI frontend based on Microsoft's [MarkItDown](https:/
 
 #### Pre-compiled Version (Recommended)
 Download `MarkItDown Converter 1.0.0.exe` from [Releases](../../releases) and double-click to run it. Ready to use, no environment configuration is required.
-Note: As per MarkItDown, image recognition requires a vision-capable LLM. It is not configured by default. You can manually configure the OpenAI API Key, Base URL, and Model Name (these settings are collapsed by default and can be customized upon expansion).
+
 
 #### Development Mode
 ```bash
