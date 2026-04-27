@@ -3,6 +3,7 @@
   "version": "1.0.0",
   "description": "Electron GUI frontend for Microsoft MarkItDown",
   "author": "MarkItDown Converter",
+  "license": "MIT",
   "main": "main.js",
   "scripts": {
     "start": "electron .",
