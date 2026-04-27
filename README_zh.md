@@ -1,4 +1,4 @@
-# MarkItDown Converter
+# MarkItDown Converter-GUI
 
 [English](./README.md)
 

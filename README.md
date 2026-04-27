@@ -1,4 +1,4 @@
-# MarkItDown Converter
+# MarkItDown Converter-GUI
 
 [简体中文](./README_zh.md)
 
